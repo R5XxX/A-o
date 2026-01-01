@@ -1,0 +1,332 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Para Jocelynn 🎄</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&display=swap');
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        body {
+            background-color: #0B1B0E;
+            overflow: hidden;
+            font-family: 'Dancing Script', cursive;
+            height: 100vh;
+            width: 100vw;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            transition: background-color 0.8s ease;
+        }
+
+        /* --- ESTRELLAS DE FONDO --- */
+        #star-field {
+            position: fixed;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            pointer-events: none;
+            z-index: 1;
+        }
+
+        .bg-star {
+            position: absolute;
+            background: white;
+            border-radius: 50%;
+            opacity: 0;
+            animation: twinkle var(--duration) infinite ease-in-out;
+        }
+
+        @keyframes twinkle {
+            0%, 100% { opacity: 0; transform: scale(0.5); }
+            50% { opacity: 1; transform: scale(1.2); box-shadow: 0 0 10px white; }
+        }
+
+        /* --- BOTÓN INICIAL Y FLECHAS --- */
+        #intro-container {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 10;
+        }
+
+        .btn-neon {
+            background: transparent;
+            border: 3px solid #fff;
+            color: white;
+            font-size: 3rem;
+            padding: 15px 35px;
+            border-radius: 25px;
+            cursor: pointer;
+            animation: blink 1.5s infinite;
+            box-shadow: 0 0 15px #fff, inset 0 0 10px #fff;
+        }
+
+        .arrow {
+            font-size: 3rem;
+            position: absolute;
+            animation: blink 1.5s infinite;
+            color: white;
+        }
+
+        .arrow-left { transform: rotate(45deg) translateX(-120px); }
+        .arrow-right { transform: rotate(135deg) translateX(-120px); }
+
+        @keyframes blink {
+            0%, 100% { opacity: 1; filter: drop-shadow(0 0 15px white); }
+            50% { opacity: 0.3; filter: drop-shadow(0 0 2px white); }
+        }
+
+        /* --- ÁRBOL --- */
+        #tree-container {
+            position: absolute;
+            bottom: 10%;
+            width: 100%;
+            height: 60vh;
+            display: flex;
+            justify-content: center;
+            align-items: flex-end;
+            z-index: 2;
+        }
+
+        .star-point {
+            position: absolute;
+            color: white;
+            font-size: 1.2rem;
+            text-shadow: 0 0 8px white;
+        }
+
+        /* --- LETRAS --- */
+        #text-container {
+            position: absolute;
+            top: 8%;
+            width: 100%;
+            text-align: center;
+            z-index: 5;
+        }
+
+        .neon-text {
+            font-size: 2rem;
+            color: transparent;
+            -webkit-text-stroke: 1px white;
+            text-transform: uppercase;
+            display: none;
+            filter: drop-shadow(0 0 10px white);
+        }
+
+        .anim-slide {
+            display: block;
+            animation: slideIn 2s forwards, blink 2s infinite 2s;
+        }
+
+        @keyframes slideIn {
+            from { transform: translateX(-100%); opacity: 0; }
+            to { transform: translateX(0); opacity: 1; }
+        }
+
+        /* --- BOTONES --- */
+        .btn-small {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            padding: 10px 20px;
+            border-radius: 15px;
+            background: transparent;
+            border: 2px solid white;
+            color: white;
+            font-family: 'Dancing Script', cursive;
+            font-size: 1.2rem;
+            box-shadow: 0 0 10px white;
+            animation: blink 2s infinite;
+            z-index: 20;
+            display: none;
+            cursor: pointer;
+        }
+
+        /* --- VIDEO Y AÑO NUEVO --- */
+        #bg-video {
+            position: fixed;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            object-fit: cover;
+            z-index: 0;
+            display: none;
+        }
+
+        #new-year-text {
+            position: absolute;
+            bottom: 80px;
+            width: 100%;
+            text-align: center;
+            font-size: 1.8rem;
+            color: white;
+            text-shadow: 0 0 15px white, 0 0 30px white;
+            z-index: 10;
+            display: none;
+            animation: bounce 1s infinite alternate;
+        }
+
+        @keyframes bounce {
+            from { transform: translateY(0) scale(1); }
+            to { transform: translateY(-15px) scale(1.05); }
+        }
+
+        .hidden { display: none !important; }
+    </style>
+</head>
+<body>
+
+    <div id="star-field"></div>
+
+    <div id="intro-container">
+        <div class="arrow arrow-left">→</div>
+        <button class="btn-neon" onclick="startApp()">🎄</button>
+        <div class="arrow arrow-right">→</div>
+    </div>
+
+    <div id="tree-container"></div>
+    
+    <div id="text-container">
+        <h1 id="main-text" class="neon-text"></h1>
+    </div>
+
+    <button id="btn-clickk" class="btn-small" onclick="showNewYear()">Clickk</button>
+
+    <video id="bg-video" playsinline loop>
+        <source src="https://i.imgur.com/WI6CLTw.mp4" type="video/mp4">
+    </video>
+
+    <div id="new-year-text">FELIZ AÑO NUEVOOO JOCELYNCITAA</div>
+    
+    <button id="btn-repeat" class="btn-small" style="top: auto; bottom: 20px; right: 20px;" onclick="resetApp()">Repetir</button>
+
+    <audio id="audio1" src="https://www.dropbox.com/scl/fi/oao8djt5eqk3vtbpsui91/Virl-n-Garc-a-Dices-Audio-Oficial-_accompaniment_mixed-2.mp3?rlkey=8vv4u9u606k3l57pszjk5um41&st=5vhocb98&raw=1"></audio>
+    <audio id="audio2" src="https://www.dropbox.com/scl/fi/qj1269wbvsaxi3jimlicf/Virl-n-Garc-a-Dices-Audio-Oficial-_accompaniment_mixed.mp3?rlkey=qf4cts0bentg0xjlgva1ij5n2&st=uktrmgnf&raw=1"></audio>
+
+    <script>
+        const starField = document.getElementById('star-field');
+        const treeContainer = document.getElementById('tree-container');
+        const mainText = document.getElementById('main-text');
+        const bgVideo = document.getElementById('bg-video');
+        const audio1 = document.getElementById('audio1');
+        const audio2 = document.getElementById('audio2');
+        let treeInterval;
+
+        function createStars() {
+            starField.innerHTML = '';
+            for (let i = 0; i < 60; i++) {
+                const star = document.createElement('div');
+                star.className = 'bg-star';
+                star.style.left = Math.random() * 100 + 'vw';
+                star.style.top = Math.random() * 100 + 'vh';
+                star.style.width = star.style.height = (Math.random() * 3 + 1) + 'px';
+                star.style.setProperty('--duration', (Math.random() * 3 + 2) + 's');
+                starField.appendChild(star);
+            }
+        }
+        createStars();
+
+        function startApp() {
+            document.getElementById('intro-container').classList.add('hidden');
+            audio1.currentTime = 0;
+            audio1.play().catch(e => {});
+            createTree();
+        }
+
+        function createTree() {
+            treeContainer.innerHTML = '';
+            const totalStars = 90;
+            let currentStar = 0;
+
+            treeInterval = setInterval(() => {
+                if (currentStar >= totalStars) {
+                    clearInterval(treeInterval);
+                    showText();
+                    return;
+                }
+
+                const star = document.createElement('div');
+                star.className = 'star-point';
+                star.innerHTML = '✦'; 
+
+                const progress = currentStar / totalStars;
+                const angle = progress * Math.PI * 12; 
+                const radius = (1 - progress) * (window.innerWidth * 0.45); 
+                const x = Math.cos(angle) * radius;
+                const y = -progress * (window.innerHeight * 0.55);
+
+                star.style.left = `calc(50% + ${x}px)`;
+                star.style.bottom = `${-y}px`;
+                
+                treeContainer.appendChild(star);
+                currentStar++;
+            }, 80);
+        }
+
+        function showText() {
+            mainText.innerText = "FELIZ NAVIDAD JOCELYNN";
+            mainText.className = 'neon-text anim-slide';
+
+            setTimeout(() => {
+                if(mainText.innerText.includes("NAVIDAD")) {
+                    mainText.innerText = "... Despues de varios dias jaja pero..";
+                    setTimeout(() => {
+                        mainText.innerText = "FELIZ NAVIDAD JOCELYNN";
+                        document.getElementById('btn-clickk').style.display = 'block';
+                    }, 3000);
+                }
+            }, 4000);
+        }
+
+        function showNewYear() {
+            audio1.pause();
+            treeContainer.classList.add('hidden');
+            document.getElementById('text-container').classList.add('hidden');
+            document.getElementById('btn-clickk').classList.add('hidden');
+            starField.classList.add('hidden');
+            document.body.style.backgroundColor = "black";
+
+            bgVideo.style.display = 'block';
+            bgVideo.currentTime = 0;
+            bgVideo.play().catch(e => {});
+            
+            audio2.currentTime = 0;
+            audio2.play().catch(e => {});
+            
+            document.getElementById('new-year-text').style.display = 'block';
+            document.getElementById('btn-repeat').style.display = 'block';
+        }
+
+        function resetApp() {
+            // Detener todo
+            clearInterval(treeInterval);
+            audio1.pause(); audio1.currentTime = 0;
+            audio2.pause(); audio2.currentTime = 0;
+            bgVideo.pause(); bgVideo.style.display = 'none';
+
+            // Resetear visuales
+            document.body.style.backgroundColor = "#0B1B0E";
+            starField.classList.remove('hidden');
+            treeContainer.classList.remove('hidden');
+            treeContainer.innerHTML = '';
+            
+            document.getElementById('text-container').classList.remove('hidden');
+            mainText.className = 'neon-text';
+            mainText.innerText = '';
+            
+            document.getElementById('intro-container').classList.remove('hidden');
+            document.getElementById('btn-clickk').style.display = 'none';
+            document.getElementById('new-year-text').style.display = 'none';
+            document.getElementById('btn-repeat').style.display = 'none';
+            
+            createStars();
+        }
+    </script>
+</body>
+</html>
